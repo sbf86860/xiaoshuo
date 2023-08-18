@@ -27,26 +27,27 @@ class down:
 
     def load(self,text,name):
         path = os.path.abspath(name+".txt")
-        logger.info(path)
         with open(path,'a+',encoding='utf-8') as f:
             f.write(text)
 
     def parse(self,title,url,name):
         r_ = self.get_response(url,headers=self.headers)
+        r_.encoding = 'gbk'
         html_1 = etree.HTML(r_.text)
         text = ''.join(html_1.xpath('//div[@id="content"]//text()')).replace('app2();','')
         text = title + '\r\n' + text + '\r\n'
         self.load(text,name)
 
     def start(self):
-        url = 'https://www.2mcnm.com/html/book/13/13499/607170072.html'
+        url = 'http://www.8zzp.com/20_20985/'
         r = self.get_response(url,headers=self.headers)
+        r.encoding = 'gbk'
         html = etree.HTML(r.text)
-        list_1 = html.xpath('//div[@class="listmain"]/dl/dt[last()]/following-sibling::*')
+        list_1 = html.xpath('//div[@id="list"]/dl/dt[last()]/following-sibling::*')
         name = ''.join(html.xpath('//div[@id="info"]/h1/text()'))
         for i in list_1:
             title = ''.join(i.xpath('.//a/text()'))
-            url = 'https://www.2mcnm.com' + ''.join(i.xpath('.//a/@href'))
+            url = 'https://www.8zzp.com' + ''.join(i.xpath('.//a/@href'))
             logger.info(title)
             logger.info(url)
             self.parse(title,url,name)
