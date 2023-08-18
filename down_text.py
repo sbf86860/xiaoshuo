@@ -4,11 +4,10 @@
 # @Site    : 
 # @File    : down_text.py
 # @Software: PyCharm
-import logging
 import os
 import requests
 from lxml import etree
-from logger import logger
+from loguru import logger
 
 class down:
     def __init__(self):
@@ -39,7 +38,7 @@ class down:
         self.load(text,name)
 
     def start(self):
-        url = 'http://www.8zzp.com/20_20985/'
+        url = 'http://www.8zzp.com/103_103869/'
         r = self.get_response(url,headers=self.headers)
         r.encoding = 'gbk'
         html = etree.HTML(r.text)
@@ -48,6 +47,7 @@ class down:
         for i in list_1:
             title = ''.join(i.xpath('.//a/text()'))
             url = 'https://www.8zzp.com' + ''.join(i.xpath('.//a/@href'))
+            logger.info(name)
             logger.info(title)
             logger.info(url)
             self.parse(title,url,name)
