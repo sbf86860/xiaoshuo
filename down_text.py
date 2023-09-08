@@ -33,20 +33,20 @@ class down:
         r_ = self.get_response(url,headers=self.headers)
         r_.encoding = 'gbk'
         html_1 = etree.HTML(r_.text)
-        text = ''.join(html_1.xpath('//div[@id="content"]//text()')).replace('app2();','')
+        text = ''.join(html_1.xpath('//div[@id="content"]//text()')).replace('app2();','').replace('read2();','')
         text = title + '\r\n' + text + '\r\n'
         self.load(text,name)
 
     def start(self):
-        url = 'http://www.8zzp.com/103_103869/'
+        url = 'https://www.23hh.com/book/22316/22316819/'
         r = self.get_response(url,headers=self.headers)
         r.encoding = 'gbk'
         html = etree.HTML(r.text)
-        list_1 = html.xpath('//div[@id="list"]/dl/dt[last()]/following-sibling::*')
+        list_1 = html.xpath('//div[@class="listmain"]/dl/dt[last()]/following-sibling::*')
         name = ''.join(html.xpath('//div[@id="info"]/h1/text()'))
         for i in list_1:
             title = ''.join(i.xpath('.//a/text()'))
-            url = 'https://www.8zzp.com' + ''.join(i.xpath('.//a/@href'))
+            url = 'https://www.23hh.com' + ''.join(i.xpath('.//a/@href'))
             logger.info(name)
             logger.info(title)
             logger.info(url)
